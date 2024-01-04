@@ -22,15 +22,15 @@ Each script is accompanied by comments explaining the problem, the solution appr
 
 Embark on your problem-solving journey with these simple steps:
 
-```bash
-# Clone the Repository:
-git clone https://github.com/PiyushBadule/coding_challenge.git
-
-# Navigate to the Repository:
-cd coding_challenge
-
-# Run a Script (Replace <script_name> with the file you wish to run):
-python3 "<script_name>.py"
+      ```bash
+      # Clone the Repository:
+      git clone https://github.com/PiyushBadule/coding_challenge.git
+      
+      # Navigate to the Repository:
+      cd coding_challenge
+      
+      # Run a Script (Replace <script_name> with the file you wish to run):
+      python3 "<script_name>.py"
 
 ## 🛠 How to Use
 
