@@ -48,9 +48,7 @@ To make the most out of this repository and enhance your problem-solving skills,
    python3 "<script_name>.py"
 
 
-### Acknowledgements:
-
-```markdown
+      ```markdown
 ## 👏 Acknowledgements
 
 This repository wouldn't be possible without the help and resources provided by several individuals and organizations. I'd like to extend my heartfelt gratitude to:
