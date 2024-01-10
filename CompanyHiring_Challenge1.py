@@ -1,56 +1,69 @@
-# Write a function to find the longest common prefix string amongst an array of strings. If there is no common prefix, return an empty string "".
+# Coding Challenge: Longest Common Prefix Finder
+# Challenge Description:
+# You are tasked with developing a function to find the longest common prefix shared among a list of strings. The common prefix must be present at the beginning of each string in the list. If no common prefix exists, your function should return an empty string.
 
-# Example 1:
-# Input: strs = ["flower","flow","flight"]
+# Examples:
+
+# Input: ["flower","flow","flight"]
 # Output: "fl"
 
-# Example 2:
-# Input: strs = ["dog","racecar","car"]
-# Output: ""
-# Explanation: There is no common prefix among the input strings.
+# Input: ["dog","racecar","car"]
+# Output: "" (Explanation: There is no common prefix among the input strings.)
 
 # Constraints:
-# 1 <= strs.length <= 200
-# 0 <= strs[i].length <= 200
-# strs[i] consists of only lower-case English letters.
+
+# The number of strings in the list will be between 1 and 200.
+# Each string's length will range from 0 to 200.
+# All strings consist only of lower-case English letters.
+# Your challenge is to implement this functionality efficiently, considering the constraints and ensuring robust handling of different cases.
 
 # Remember this challenge is from lit Code where Input is Scanned Autonatically
 
+from typing import List
+
 class Solution:
-    def longSeq(self, str1, str2) -> str:
-        l1 = len(str1)
-        l2 = len(str2)
-        res = ""
-        minLen = min(l1, l2)
+    def _find_common_prefix(self, str1: str, str2: str) -> str:
+        """
+        Helper function to find the common prefix between two strings.
 
-        if minLen == 1:
-            if str1[0] == str2[0]:
-                return str1[0]
-            else:
-                return ""
-        else:
-            for i in range(0, minLen):
-                if (str1[i] != str2[i]):
-                    break
-                else:
-                    res = res + str1[i]
+        Args:
+        str1 (str): The first string.
+        str2 (str): The second string.
 
-                # i +=1
-                # j += 1
-            return res
+        Returns:
+        str: The common prefix between str1 and str2.
+        """
+        min_len = min(len(str1), len(str2))
 
-    def longestCommonPrefix(self, strs: List[str]) -> str:
-        l1 = strs[0]
+        for i in range(min_len):
+            if str1[i] != str2[i]:
+                return str1[:i]
+        return str1[:min_len]
 
-        prefix = l1
-        if len(l1) == 0:
+    def longest_common_prefix(self, strs: List[str]) -> str:
+        """
+        Function to find the longest common prefix string amongst an array of strings.
+
+        Args:
+        strs (List[str]): List of strings.
+
+        Returns:
+        str: The longest common prefix found. Returns an empty string if no common prefix exists.
+        """
+        if not strs:
             return ""
-        elif len(strs) == 1:
-            return strs[0]
-        else:
+        prefix = strs[0]
 
-            for i in range(1, len(strs)):
-                # pre+fix1 = self.longSeq(l1, strs[i])
-                prefix = self.longSeq(prefix, strs[i])
+        for i in range(1, len(strs)):
+            prefix = self._find_common_prefix(prefix, strs[i])
 
-            return prefix
+        return prefix
+
+
+def main():
+    solution = Solution()
+    print(solution.longest_common_prefix(["flower", "flow", "flight"]))  # Example 1
+    print(solution.longest_common_prefix(["dog", "racecar", "car"]))     # Example 2
+
+if __name__ == "__main__":
+    main()
