@@ -1,135 +1,124 @@
-# Given an array A and a number X, find a fictitious Super-Number. Here are the steps to find the Super-Number.
+# "Advanced Super-Number Array Transformation Challenge"
+# Introduction
 
+# In the realm of data manipulation and algorithmic challenges, the task of array transformation stands as a cornerstone of computational problem-solving. This challenge invites you to delve into the intricate world of arrays, prime number analysis, and dynamic sub-array calculations.
 
-# e.g. For a given array A = [13, 18, 1, 3, 4, 5, 50, 29, 30, 41]
+# Objective
 
-# Step-1: Find the sum of all prime numbers in an array.
+# Your mission, should you choose to accept it, involves a sophisticated operation on an integer array A, coupled with a numerical limit X. Your task is to compute a value known as the "Super-Number" through a multi-stage transformation process. Each stage requires a blend of mathematical acumen and algorithmic precision.
 
-#     Sum of prime numbers = 13+3+5+29+41 = 91
+# Transformation Stages
 
+# Prime Enumeration: Traverse through array A and compute the aggregate of all prime elements. This total is your "Prime Summation".
 
-# Step-2: Find an absolute difference between all the elements of an original array and sum of prime numbers.
+# Differential Mapping: Construct an array B, each of whose elements represents the absolute disparity between the corresponding element in A and the "Prime Summation".
 
-#   The elements of an array after absolute different between an element and sum of prime (ie. 91)
+# Selective Ordering: Rearrange array B in an ascending sequence, meticulously excluding all prime numbers from this ordered collection.
 
-#   B = [ |13-91|, |18-91|, |1-91|, |3-91|,  |4-91|,  |5-91|,  |50-91|,  |29-91|,  |30-91|,  |41-91| ]
+# Sub-Array Stratagem: Engage in a counting operation to identify all possible sub-arrays within the sorted, non-prime array B, ensuring that the sum of elements in each sub-array does not exceed the threshold X.
 
-#   B = [78, 73, 90, 88, 87, 86, 41, 62, 61, 50]
+# Exceptional Handling: In a scenario where array B is devoid of non-prime numbers, declare the "Super-Number" as -1.
 
+# Input Specifications
 
-# Step-3: Arrange non-prime numbers in increasing order and remove prime numbers.
+# The first line of input represents the count of elements N in array A.
+# The second line contains N space-separated integers, delineating array A.
+# The third line specifies the numerical limit X.
+# Output Specifications
 
-#   C = [50 62 78 86 87 88 90]
+# Output a single integer - the calculated "Super-Number".
 
-#   if no, non-prime number exists, return -1.
+# Example 1:
+# Enter number of elements: 10
+# Enter exactly 10 elements, separated by spaces: 13 18 1 3 4 5 50 29 30 41
+# Enter the value of X: 200
 
+# Super-Number: 14
 
-# Step-4: Find count of sub array whose sum is less than X=200.
+# Example 2:
+# Enter number of elements: 5
+# Enter exactly 5 elements, separated by spaces: 2 3 5 7 11
+# Enter the value of X: 10
 
-#   Possible sub-arrays whose sum is less than 200 are.
+# Super-Number: -1
 
-#   [ 50 ], [ 50, 62 ], [ 50, 62, 78 ], [ 62 ], [ 62, 78 ], [ 78 ], [ 78, 86 ], [ 86 ], [ 86, 87 ], [ 87 ], [ 87, 88 ], [ 88 ], [ 88, 90 ], [ 90 ]
+def count_subarrays(arr, limit):
+    """
+    Calculate the count of subarrays where the sum of elements is less than the given limit.
 
-#   Total sub-array are 14.
+    Args:
+    arr (list): A list of integers.
+    limit (int): The upper limit for the sum of subarray elements.
 
-
-# Input
-
-# 10
-# 13 18 1 3 4 5 50 29 30 41
-# 200
-
-
-#     Where,
-
-# First line represents a number of elements (N) in an array.
-# Second line represents an element of an array A.
-# Third line represents a value X.
-
-
-# Output
-
-# 14
-
-
-# Enter Input in  Form
-
-
-# Input
-
-# 10
-# 13 18 1 3 4 5 50 29 30 41
-# 200
-
-
-# ----------------------------------------------------------------------------------------------------------------
-
-def solution(L, X):
-    l1 = []
-    z = X
-    l2 = []
-    l3 = []
-    l4 = []
-    l5 = []
-    i = 1
+    Returns:
+    int: Count of subarrays satisfying the condition.
+    """
     count = 0
-    for x in L:
-        a = x
-        for i in range(1, a + 1):
-            if a % i == 0:
-                count = count + 1
-
-        if count == 2:
-            l1.append(i)
-
-        count = 0
-        i = i + 1
-
-    b = sum(l1)
-    for x in L:
-        a = x
-        sub = a - b
-        l2.append(abs(sub))
-
-    l2.sort()
-    for x in l2:
-        a = x
-        for i in range(1, a + 1):
-            if a % i == 0:
-                count = count + 1
-
-        if count == 2:
-            l3.append(i)
-        else:
-            l4.append(i)
-
-        count = 0
-        i = i + 1
-
-    size = len(l4)
-    final = 0
-    for i in range(0, size):
-        sum1 = 0
-        for j in range(i, size):
-            if (sum1 + l4[j] < z):
-
-                sum1 = l4[j] + sum1
-                final += 1
+    for start in range(len(arr)):
+        sum = 0
+        for end in range(start, len(arr)):
+            sum += arr[end]
+            if sum < limit:
+                count += 1
             else:
                 break
+    return count
 
-    return final
+def is_prime(n):
+    """
+    Check if a number is prime.
 
+    Args:
+    n (int): The number to check.
 
-N = int(input())
-L = []
-n = 0
-for e in input().split():
-    if (n < N):
-        L.append(int(e))
-        n += 1
-X = int(input())
-if (n < N):
-    print("Please input {0} elements".format(N), end='')
-else:
-    print(solution(L, X), end='')
+    Returns:
+    bool: True if the number is prime, False otherwise.
+    """
+    if n <= 1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def super_number_finder(arr, X):
+    """
+    Determine the Super-Number based on the given array transformation process.
+
+    Args:
+    arr (list): An array of integers.
+    X (int): The upper limit for the sum of subarray elements.
+
+    Returns:
+    int: The Super-Number based on the array transformation.
+    """
+    # Step 1: Sum of prime numbers
+    prime_sum = sum([num for num in arr if is_prime(num)])
+
+    # Step 2: Absolute difference array
+    diff_arr = [abs(num - prime_sum) for num in arr]
+
+    # Step 3: Sort non-prime numbers
+    non_prime_sorted = sorted([num for num in diff_arr if not is_prime(num)])
+
+    # Return -1 if no non-prime numbers
+    if not non_prime_sorted:
+        return -1
+
+    # Step 4: Count sub-arrays
+    return count_subarrays(non_prime_sorted, X)
+
+# Main block to test the function
+if __name__ == "__main__":
+    try:
+        N = int(input("Enter number of elements: "))
+        elements = input(f"Enter exactly {N} elements, separated by spaces: ").split()
+
+        if len(elements) != N:
+            print(f"Please input exactly {N} elements")
+        else:
+            A = list(map(int, elements))
+            X = int(input("Enter the value of X: "))
+            print("Super-Number:", super_number_finder(A, X))
+    except ValueError:
+        print("Please enter valid integer values.")
