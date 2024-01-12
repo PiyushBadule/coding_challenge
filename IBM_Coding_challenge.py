@@ -19,19 +19,48 @@
 # 180000                         300000
 # 20                             25
 
-employment_type = input()
-age = int(input())
-salary = int(input())
-loan_period = int(input())
-if employment_type == 'salaried' or employment_type == 'self-employed':
-    if age + loan_period <= 58:
-        if employment_type == 'salaried' and salary >= 120000:
-            print('Eligible')
-        elif employment_type == 'self-employed' and salary >= 200000:
-            print('Eligible')
-        else:
-            print('Not eligible')
+def is_loan_eligible(employment_type, age, salary, loan_period):
+    """
+    Determines if an individual is eligible for a home loan based on employment type, age, salary, and loan tenure.
+
+    Parameters:
+    employment_type (str): The employment type of the individual ('salaried' or 'self-employed').
+    age (int): The age of the individual.
+    salary (int): The annual salary of the individual.
+    loan_period (int): The requested loan tenure in years.
+
+    Returns:
+    bool: True if eligible for the loan, False otherwise.
+    """
+    MAX_AGE_LIMIT = 58
+    MIN_SALARY_SALARIED = 120000
+    MIN_SALARY_SELF_EMPLOYED = 200000
+
+    if not (employment_type in ['salaried', 'self-employed']):
+        return False
+
+    if age + loan_period > MAX_AGE_LIMIT:
+        return False
+
+    if (employment_type == 'salaried' and salary >= MIN_SALARY_SALARIED) or \
+       (employment_type == 'self-employed' and salary >= MIN_SALARY_SELF_EMPLOYED):
+        return True
+
+    return False
+
+def main():
+    """
+    Main function to take user input and print loan eligibility status.
+    """
+    employment_type = input("Enter your employment type (salaried/self-employed): ")
+    age = int(input("Enter your age: "))
+    salary = int(input("Enter your annual salary: "))
+    loan_period = int(input("Enter desired loan tenure (in years): "))
+
+    if is_loan_eligible(employment_type, age, salary, loan_period):
+        print('Eligible')
     else:
         print('Not eligible')
-else:
-    print('Not eligible')
+
+if __name__ == "__main__":
+    main()
