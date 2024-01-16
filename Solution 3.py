@@ -13,24 +13,34 @@
 # question to check if string is palindrome or not).
 # (Hint: Do not write a program to find the permutation and combination of original string and then
 # check combination. Program is much simpler than finding permutation and combination. )
-a = input()
-flag = 0
-c = 0
-L = list(a)
-for x in L:
-    if (L.count(x) == 1 or L.count(x) % 2 == 0):
-        if (L.count(x) == 1):
-            c = c + 1
-            if (c < 2):
-                pass
-            else:
-                print("NOT Palindromable")
-                flag = 0
-                break
-        flag = 1
+
+def is_palindromable(s):
+    """
+    Checks if the given string can be rearranged to form a palindrome.
+
+    Args:
+    s (str): The string to be checked.
+
+    Returns:
+    bool: True if the string can be rearranged to form a palindrome, False otherwise.
+    """
+    char_counts = {}
+    for char in s:
+        char_counts[char] = char_counts.get(char, 0) + 1
+
+    odd_count = sum(1 for count in char_counts.values() if count % 2 != 0)
+
+    return odd_count <= 1
+
+def main():
+    """
+    Main function to drive the program. Takes a string as input and checks if it is Palindromable.
+    """
+    input_string = input("Enter a string: ")
+    if is_palindromable(input_string):
+        print("Palindromable")
     else:
         print("NOT Palindromable")
-        flag = 0
-        break
-if (flag == 1):
-    print("Palindromable")
+
+if __name__ == "__main__":
+    main()
