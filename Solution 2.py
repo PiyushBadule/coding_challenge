@@ -1,6 +1,3 @@
-
-# Certainly! Let's reframe this as a more challenging coding question and then provide a professionally structured solution with docstrings and a main function.
-
 # Coding Challenge: Array Transformation Based on Multiples of 5
 # Task: Write a function transform_array that modifies an input array in-place such that all elements that are multiples of 5 are moved to the end of the array.
 # The order of the non-multiples of 5 should remain unchanged, and the order of the multiples of 5 at the end of the array is not important.
