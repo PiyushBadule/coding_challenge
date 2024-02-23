@@ -1,0 +1,64 @@
+# Longest Substring Without Repeating Characters
+# 
+# Given a string s, find the length of the longest substring without repeating characters.
+# 
+# Example 1:
+# Input: s = "abcabcbb"
+# Output: 3
+# Explanation: The answer is "abc", with the length of 3.
+# 
+# Example 2:
+# Input: s = "bbbbb"
+# Output: 1
+# Explanation: The answer is "b", with the length of 1.
+# 
+# Example 3:
+# Input: s = "pwwkew"
+# Output: 3
+# Explanation: The answer is "wke", with the length of 3.
+# Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
+# 
+# Constraints:
+# 1:- 0 <= s.length <= 5 * 104
+# 2:- s consists of English letters, digits, symbols and spaces.
+
+def length_of_longest_substring(s):
+    """
+    Find the length of the longest substring without repeating characters.
+
+    Args:
+        s (str): Input string.
+
+    Returns:
+        int: Length of the longest substring without repeating characters.
+
+    Example:
+        >>> length_of_longest_substring("abcabcbb")
+        3
+        >>> length_of_longest_substring("bbbbb")
+        1
+        >>> length_of_longest_substring("pwwkew")
+        3
+    """
+    char_index_map = {}  # Map to store the last index of each character
+    max_length = 0
+    start_index = 0
+
+    for end_index, char in enumerate(s):
+        if char in char_index_map and char_index_map[char] >= start_index:
+            start_index = char_index_map[char] + 1
+        char_index_map[char] = end_index
+        max_length = max(max_length, end_index - start_index + 1)
+
+    return max_length
+
+def main():
+    # Test cases
+    test_strings = ["abcabcbb", "bbbbb", "pwwkew"]
+    for test_str in test_strings:
+        print(f"Input: {test_str}")
+        print("Output:", length_of_longest_substring(test_str))
+        print()
+
+if __name__ == "__main__":
+    main()
