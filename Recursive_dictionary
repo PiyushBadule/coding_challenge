@@ -1,0 +1,55 @@
+# Description:
+# Given a nested dictionary d, containing various keys with associated values, some of which may be None, implement a recursive function to remove all key-value pairs where the value is None.
+# The function should traverse the dictionary recursively, examining each key-value pair and eliminating those with None values. 
+# The function should return the modified dictionary without altering its original structure.
+#
+# Function Signature:
+# def remove_none_values(d: dict) -> dict:
+#     """
+#     Removes key-value pairs with None values from a nested dictionary recursively.
+# 
+#     Parameters:
+#     d (dict): The input nested dictionary.
+# 
+#     Returns:
+#     dict: Modified dictionary with None values removed.
+#     """
+    # Your implementation here
+
+# Constraints:
+
+# The input dictionary d is guaranteed to be a nested dictionary, possibly containing nested dictionaries within.
+# The keys in the dictionary are unique.
+# The dictionary may have an arbitrary depth of nesting.
+# The values associated with the keys can be of any data type.
+# The function should use recursion to traverse and modify the dictionary.
+# Example:
+# Input
+# d = {"a": {"b": 10, "c": 20}, "d": None, "e": {"f": 30, "g": None}}
+
+# Output
+# Modified dictionary after removing None values
+# {"a": {"b": 10, "c": 20}, "e": {"f": 30}}
+# Note:
+# Ensure that the function handles various data types of values within the dictionary and correctly removes None values while preserving the structure of the original dictionary.
+
+def remove_none(d):
+    """
+    Removes key-value pairs with None values from a nested dictionary recursively.
+
+    Parameters:
+    d (dict): The input nested dictionary.
+
+    Returns:
+    None: The function modifies the input dictionary in-place.
+    """
+    for key, value in list(d.items()):
+        if value is None:
+            del d[key]
+        else:
+            remove_none(value) if isinstance(value, dict) else None
+
+# Example usage:
+d = {"a": {"b": 10, "c": 20}, "d": None, "e": {"f": 30, "g": 40}}
+remove_none(d)
+print(d)
