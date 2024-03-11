@@ -1,0 +1,111 @@
+# Dice Game Challenge
+# Question:
+#
+# You are tasked with simulating a dice game for a company's hiring challenge. The game involves four players, each rolling a six-sided dice multiple times. The total score needed to win the game is determined by the square of the number of chances each player gets.
+#
+# Rules:
+#
+# Each player will get a chance to roll the dice a certain number of times.
+# The total score required to win is equal to the square of the number of chances each player gets.
+# The game will end as soon as any player achieves the target score.
+# Players cannot roll the dice more than six times.
+# Your Task:
+#
+# Write a Python program that simulates the dice game as per the rules described above.
+# Ensure that the input for the number of chances per player is between 1 and 5 (inclusive). Explain in the code comments why this limitation is necessary.
+# Implement the game logic using a class-based structure with appropriate methods and attributes.
+# Display the history of dice rolls for each player in a tabular format using pandas DataFrame.
+# Example:
+
+# Enter the number of chances per player (between 1 and 5): 3
+#
+# Chance 1:
+# Player 1 rolls: 3
+# Player 2 rolls: 4
+# Player 3 rolls: 6
+# Player 4 rolls: 2
+#
+# Chance 2:
+# Player 1 rolls: 5
+# Player 2 rolls: 1
+# Player 3 rolls: 6
+# Player 4 rolls: 3
+#
+# Chance 3:
+# Player 1 rolls: 2
+# Player 2 rolls: 6
+# Player 3 rolls: 4
+# Player 4 rolls: 2
+#
+# No player wins. Total score did not match the target.
+#
+# Player History:
+#    Player 1  Player 2  Player 3  Player 4
+# 0         3         4         6         2
+# 1         5         1         6         3
+# 2         2         6         4         2
+
+# Note:
+# 
+# Ensure that your code is well-documented with appropriate comments.
+# Provide an explanation for any design decisions made in the code.
+# Test your code with different inputs to verify its correctness and efficiency.
+
+import random
+import pandas as pd
+
+class DiceGame:
+    def __init__(self, num_players):
+        self.num_players = num_players
+
+    def play_game(self, num_chances):
+        """
+        Simulate the dice game.
+
+        Parameters:
+        - num_chances (int): Number of chances per player.
+
+        Returns:
+        - player_history (dict): Dictionary containing the history of each player's dice rolls.
+        """
+        target_score = num_chances ** 2
+        player_history = {f"Player {i+1}": [0] * num_chances for i in range(self.num_players)}
+
+        # Iterate through each chance
+        for chance in range(num_chances):
+            print(f"\nChance {chance+1}:")
+
+            # Iterate through each player
+            for player in range(self.num_players):
+                # Roll the dice
+                dice_value = random.randint(1, 6)
+                # Record the dice value for the current player
+                player_history[f"Player {player+1}"][chance] = dice_value
+                print(f"Player {player+1} rolls: {dice_value}")
+
+                # Check if the player has reached the target score
+                if sum(player_history[f"Player {player+1}"]) == target_score:
+                    print(f"\nPlayer {player+1} wins with a total score of {target_score}!")
+                    return player_history
+
+        print("\nNo player wins. Total score did not match the target.")
+        return player_history
+
+def main():
+    num_players = 4
+    while True:
+        num_chances = int(input("Enter the number of chances per player (between 1 and 5): "))
+        if 1 <= num_chances <= 5:
+            break
+        print("Invalid input! Please enter a number between 1 and 5.")
+
+    game = DiceGame(num_players)
+    player_history = game.play_game(num_chances)
+
+    # Convert player history to DataFrame for better visualization
+    df = pd.DataFrame(player_history)
+    print("\nPlayer History:")
+    print(df)
+
+if __name__ == "__main__":
+    main()
