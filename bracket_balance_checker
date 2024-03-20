@@ -1,0 +1,42 @@
+def is_balanced(pattern):
+    """
+    Check if the given pattern of brackets is balanced.
+
+    A pattern is considered balanced if each opening bracket (i.e., '(', '[', '{')
+    is matched with a corresponding closing bracket (i.e., ')', ']', '}') of the same type,
+    and the brackets are properly nested.
+
+    Parameters:
+    - pattern (str): The string containing the pattern of brackets to be checked.
+
+    Returns:
+    - bool: True if the pattern is balanced, False otherwise.
+    """
+    bracket_map = {")": "(", "]": "[", "}": "{"}
+    open_brackets = set(bracket_map.values())
+    stack = []
+
+    for char in pattern:
+        if char in open_brackets:
+            stack.append(char)
+        elif char in bracket_map:
+            if not stack or stack[-1] != bracket_map[char]:
+                return False
+            stack.pop()
+
+    return len(stack) == 0
+
+def main():
+    """
+    Test the is_balanced function with different patterns.
+    """
+    patterns = {
+        "[({}[]){}]": "The pattern: [({}[]){}] is balanced? \nANS: ",
+        "[({}[]){]}]": "The pattern: [({}[]){]}] is balanced? \nANS: "
+    }
+
+    for pattern, message in patterns.items():
+        print(f"{message}{is_balanced(pattern)}")
+
+if __name__ == "__main__":
+    main()
